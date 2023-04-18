@@ -14,6 +14,7 @@ NO* fim = NULL;
 void menu();
 void inicializar();
 void insere();
+void exibirElementos();
 void remove();
 //--------------------------
 
@@ -26,14 +27,15 @@ int main()
 void menu()
 {
 	int op = 0;
-	while (op != 4) {
+	while (op != 5) {
 		system("cls"); // somente no windows
 		cout << "Menu Fila";
 		cout << endl << endl;
 		cout << "1 - Inicializar Fila \n";
 		cout << "2 - Inserir elemento \n";
-		cout << "3 - Remover elemento  \n";
-		cout << "4 - Sair \n";
+		cout << "3 - Exibir elemento \n";
+		cout << "4 - Remover elemento  \n";
+		cout << "5 - Sair \n";
 
 		cout << "Opcao: ";
 		cin >> op;
@@ -44,9 +46,11 @@ void menu()
 			break;
 		case 2:insere();
 			break;
-		case 3: remove();
+		case 3:exibirElementos();
 			break;
-		case 4:
+		case 4: remove();
+			break;
+		case 5:
 			return;
 		default:
 			break;
@@ -59,7 +63,7 @@ void menu()
 void inicializar()
 {
 
-	// se a lista já possuir elementos
+	// se a lista jÃ¡ possuir elementos
 	// libera a memoria ocupada
 	NO* aux = inicio;
 	while (aux != NULL) {
@@ -88,13 +92,43 @@ void insere()
 	cin >> novo->valor;
 	novo->prox = NULL;
 
+	if (inicio == NULL) {
+		inicio = novo;
+		fim = novo;
+	}
+	else {
+		fim->prox = novo;
+		fim = novo;
+	}
 
+	cout << "Elemento inserido na fila." << endl;
+}
+
+void exibirElementos()
+{
+	if (inicio == NULL) {
+		cout << "Lista vazia \n";
+		return;
+	}
+	else {
+		cout << "Elementos: \n";
+		NO* aux = inicio;
+		while (aux != NULL) {
+			cout << aux->valor << endl;
+			aux = aux->prox;
+		}
+	}
 }
 
 void remove()
 {
+	if (inicio == NULL) {
+		cout << "Fila Vazia" << endl;
+		return;
+	}
 
-
-
+	NO* paraExcluir = inicio;
+	inicio = inicio->prox;
+	cout << "Elemento removido: " << paraExcluir->valor << endl;
+	free(paraExcluir);
 }
-
